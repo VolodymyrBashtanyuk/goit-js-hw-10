@@ -1,18 +1,18 @@
 import '../css/styles.css';
 import Debounce from 'lodash.debounce';
-
-import API from './fetchCountries'
+import ApiCountries from './fetchCountries'
 
 const DEBOUNCE_DELAY = 300;
+const apiCountries = new ApiCountries();
 
 const searchContry = document.querySelector('#search-box');
 searchContry.addEventListener('input', Debounce(onSearchContry, DEBOUNCE_DELAY))
 
 function onSearchContry(e) {
     const countries = e.target.value;
-   API(countries.trim());
+   apiCountries.fetchCountries(countries.trim());
 };
-
+console.log(ApiCountries.dataCountries)
 // name.official - полное имя страны
 // capital - столица
 // population - население

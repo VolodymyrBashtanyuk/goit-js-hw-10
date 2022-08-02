@@ -1,7 +1,21 @@
-export default function fetchCountries(name) {
-    const url = 'https://restcountries.com/v2'
-return fetch(`${url}/name/${name}?fields=name,capital,population,flags,languages`).then(response => response.json()).then(name => name);
+const URL = 'https://restcountries.com/v2'
+
+export default class ApiCountries {
+    constructor() {
+        // this.name = '';
+    }
+     
+    fetchCountries(name) {
+        
+        return fetch(`${URL}/name/${name}?fields=name,capital,population,flags,languages`)
+        .then(response => response.json())
+        .then(dataCountries => dataCountries);
+    };
+    
+
 };
+    
+
 
 // name.official - полное имя страны name
 // capital - столица capital:

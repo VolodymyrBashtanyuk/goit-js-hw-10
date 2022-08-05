@@ -14,12 +14,12 @@ const coutryInfo = document.querySelector('.country-info');
 searchContry.addEventListener('input', Debounce(onSearchContry, DEBOUNCE_DELAY))
 
 function onSearchContry(e) {
-    const countries = e.target.value;
+    const countries = e.target.value.trim();
     if (countries === '') { 
         removeData();
         return;
     }
-    apiCountries(countries.trim())
+    apiCountries(countries)
         .then(data => insertContent(data))
         .catch(error => notFound(error));
     

@@ -5,8 +5,6 @@ const URL = 'https://restcountries.com/v2';
         return fetch(`${URL}/name/${name}?fields=name,capital,population,flags,languages`)
         .then(response => response.json())
         .then(dataCountries =>  dataCountries)
-        .catch(error => error)
-      
     };
     
 

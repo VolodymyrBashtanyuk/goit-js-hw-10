@@ -16,8 +16,7 @@ searchContry.addEventListener('input', Debounce(onSearchContry, DEBOUNCE_DELAY))
 function onSearchContry(e) {
     const countries = e.target.value;
     if (countries === '') { 
-        coutryInfo.innerHTML = '';  //очищає HTML якщо дуже швидко видаляем input
-        countryList.innerHTML = '';
+        removeData();
         return;
     }
     apiCountries(countries.trim())
@@ -27,18 +26,19 @@ function onSearchContry(e) {
 };
 
 const insertContent = (countries) => {
-    if (countries.length > 10) {
-        Notiflix.Notify.info('Too many matches found. Please enter a more specific name.');
-        countryList.innerHTML = '';
-        return;
-    } else if (countries.length === 1) {
-        const resultInfo = countryInfoMarkup(countries)
+    const result = listCountry(countries);
+    
+     if (countries.length === 1) {
+        countryList.innerHTML = result; 
+        const resultInfo = countryInfoMarkup(countries);
         coutryInfo.insertAdjacentHTML('beforeend', resultInfo);
-    } else {
+    } else if (countries.length < 10 && countries.length > 1) {
+        countryList.innerHTML = result; 
         coutryInfo.innerHTML = '';
+    } else {
+        Notiflix.Notify.info('Too many matches found. Please enter a more specific name.');
+        removeData();
     }
-     const result = listCountry(countries);
-     countryList.innerHTML = result;  
 }
 
 const listCountry = (list) => list.reduce((acc, item) => acc + countryMarkup(item), '');
@@ -50,13 +50,14 @@ const countryMarkup = (({ name, flags }) => {
 });
 
 const countryInfoMarkup = (country) => {
-    for (let { capital, population, languages } of country) {
+    const { capital, population, languages } = country[0];
+    // for (let { capital, population, languages } of country) {
         const language = languages.map(list => list.name).join(' ');
         const info = `<p class="country-info__text"><span>Capital:</span>${capital}</p>
         <p class="country-info__text"><span>Population:</span>${population}</p>
         <p class="country-info__text"><span>Languages:</span>${language}</p>`;
         return info;
-    }
+    // }
 };
 
 const notFound = () => {
@@ -64,4 +65,9 @@ const notFound = () => {
     countryList.innerHTML = '';  
     coutryInfo.innerHTML = ''
 };
+
+const removeData = () => {
+    countryList.innerHTML = '';
+    coutryInfo.innerHTML = '';
+}
 

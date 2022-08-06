@@ -62,8 +62,7 @@ const countryInfoMarkup = (country) => {
 
 const notFound = () => {
     Notiflix.Notify.failure('Oops, there is no country with that name')
-    countryList.innerHTML = '';  
-    coutryInfo.innerHTML = ''
+    removeData();
 };
 
 const removeData = () => {

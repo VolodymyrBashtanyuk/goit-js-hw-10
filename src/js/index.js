@@ -51,13 +51,11 @@ const countryMarkup = (({ name, flags }) => {
 
 const countryInfoMarkup = (country) => {
     const { capital, population, languages } = country[0];
-    // for (let { capital, population, languages } of country) {
         const language = languages.map(list => list.name).join(' ');
         const info = `<p class="country-info__text"><span>Capital:</span>${capital}</p>
         <p class="country-info__text"><span>Population:</span>${population}</p>
         <p class="country-info__text"><span>Languages:</span>${language}</p>`;
         return info;
-    // }
 };
 
 const notFound = () => {
